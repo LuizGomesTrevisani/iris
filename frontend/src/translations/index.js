@@ -145,7 +145,7 @@ const translations = {
     hipaaDescription: "Plataforma segura e criptografada que atende aos padrões de privacidade em saúde",
     collaborativeWorkflow: "Fluxo de Trabalho Colaborativo",
     workflowDescription: "Plataforma multi-função projetada para equipes de pesquisa médica",
-    ultraHighResolution: "Análise de Ultra Alta Resolução",
+    ultraHighResolution: "Análise de Ultra Resolução",
     resolutionDescription: "Processamento avançado de imagem capaz de detectar mudanças microscópicas na córnea",
     
     // CTA Section
