@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
 import { Eye, Brain, Shield, Users, Upload, BarChart3, Settings, LogOut, Menu, X } from "lucide-react";
 import axios from "axios";
+import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
+import { useTranslation } from "./translations";
+import { LanguageToggle } from "./components/LanguageToggle";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -14,6 +17,8 @@ const API = `${BACKEND_URL}/api`;
 const LandingPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { language } = useLanguage();
+  const { t } = useTranslation(language);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -60,15 +65,16 @@ const LandingPage = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-slate-300 hover:text-white transition-colors">Features</a>
-            <a href="#technology" className="text-slate-300 hover:text-white transition-colors">Technology</a>
-            <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
+          <div className="hidden md:flex items-center space-x-6">
+            <a href="#features" className="text-slate-300 hover:text-white transition-colors">{t('features')}</a>
+            <a href="#technology" className="text-slate-300 hover:text-white transition-colors">{t('technology')}</a>
+            <a href="#contact" className="text-slate-300 hover:text-white transition-colors">{t('contact')}</a>
+            <LanguageToggle />
             <Button 
               onClick={handleLogin}
               className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-6 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Login / Sign Up
+              {t('loginSignup')}
             </Button>
           </div>
 
@@ -85,14 +91,17 @@ const LandingPage = () => {
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-700">
             <div className="px-6 py-4 space-y-4">
-              <a href="#features" className="block text-slate-300 hover:text-white">Features</a>
-              <a href="#technology" className="block text-slate-300 hover:text-white">Technology</a>
-              <a href="#contact" className="block text-slate-300 hover:text-white">Contact</a>
+              <a href="#features" className="block text-slate-300 hover:text-white">{t('features')}</a>
+              <a href="#technology" className="block text-slate-300 hover:text-white">{t('technology')}</a>
+              <a href="#contact" className="block text-slate-300 hover:text-white">{t('contact')}</a>
+              <div className="flex justify-center">
+                <LanguageToggle />
+              </div>
               <Button 
                 onClick={handleLogin}
                 className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
               >
-                Login / Sign Up
+                {t('loginSignup')}
               </Button>
             </div>
           </div>
@@ -104,24 +113,22 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto text-center">
           <div className="mb-8">
             <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 px-4 py-2 mb-6">
-              Revolutionary AI Technology
+              {t('revolutionaryTech')}
             </Badge>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-300 bg-clip-text text-transparent">
-              Discover Disease
+              {t('discoverDisease')}
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              Through Your Eyes
+              {t('throughYourEyes')}
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Our advanced artificial intelligence analyzes corneal characteristics combined with 
-            comprehensive medical records from thousands of patients to identify disease patterns 
-            and provide early diagnostic insights with unprecedented accuracy.
+            {t('heroDescription')}
           </p>
 
           <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
@@ -129,13 +136,13 @@ const LandingPage = () => {
               onClick={handleLogin}
               className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-4 text-lg rounded-xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 transform hover:scale-105"
             >
-              Start Analysis
+              {t('startAnalysis')}
             </Button>
             <Button 
               variant="outline" 
               className="border-slate-600 text-slate-300 hover:bg-slate-800 px-8 py-4 text-lg rounded-xl"
             >
-              Learn More
+              {t('learnMore')}
             </Button>
           </div>
         </div>
@@ -146,10 +153,10 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Advanced Medical AI Platform
+              {t('advancedPlatform')}
             </h2>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-              Three specialized access levels designed for comprehensive medical analysis workflow
+              {t('platformDescription')}
             </p>
           </div>
 
@@ -160,15 +167,15 @@ const LandingPage = () => {
                 <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
                   <Settings className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white text-xl">Admin Control</CardTitle>
+                <CardTitle className="text-white text-xl">{t('adminControl')}</CardTitle>
               </CardHeader>
               <CardContent className="text-slate-300">
-                <p className="mb-4">Complete platform management with full oversight capabilities.</p>
+                <p className="mb-4">{t('adminDescription')}</p>
                 <ul className="space-y-2 text-sm">
-                  <li>• Manage all users and permissions</li>
-                  <li>• Monitor AI analysis outputs</li>
-                  <li>• System configuration control</li>
-                  <li>• Comprehensive audit trails</li>
+                  <li>• {t('adminFeatures.0')}</li>
+                  <li>• {t('adminFeatures.1')}</li>
+                  <li>• {t('adminFeatures.2')}</li>
+                  <li>• {t('adminFeatures.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -179,15 +186,15 @@ const LandingPage = () => {
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white text-xl">Collaborator Access</CardTitle>
+                <CardTitle className="text-white text-xl">{t('collaboratorAccess')}</CardTitle>
               </CardHeader>
               <CardContent className="text-slate-300">
-                <p className="mb-4">Upload and submit medical data for AI analysis processing.</p>
+                <p className="mb-4">{t('collaboratorDescription')}</p>
                 <ul className="space-y-2 text-sm">
-                  <li>• Upload corneal photographs</li>
-                  <li>• Submit patient medical records</li>
-                  <li>• Request analysis processing</li>
-                  <li>• Track submission status</li>
+                  <li>• {t('collaboratorFeatures.0')}</li>
+                  <li>• {t('collaboratorFeatures.1')}</li>
+                  <li>• {t('collaboratorFeatures.2')}</li>
+                  <li>• {t('collaboratorFeatures.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -198,15 +205,15 @@ const LandingPage = () => {
                 <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4">
                   <BarChart3 className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white text-xl">Scientist Review</CardTitle>
+                <CardTitle className="text-white text-xl">{t('scientistReview')}</CardTitle>
               </CardHeader>
               <CardContent className="text-slate-300">
-                <p className="mb-4">Review, validate and annotate AI-generated medical insights.</p>
+                <p className="mb-4">{t('scientistDescription')}</p>
                 <ul className="space-y-2 text-sm">
-                  <li>• Review analysis results</li>
-                  <li>• Validate medical findings</li>
-                  <li>• Add scientific annotations</li>
-                  <li>• Generate research reports</li>
+                  <li>• {t('scientistFeatures.0')}</li>
+                  <li>• {t('scientistFeatures.1')}</li>
+                  <li>• {t('scientistFeatures.2')}</li>
+                  <li>• {t('scientistFeatures.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -220,12 +227,10 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                Cutting-Edge AI Technology
+                {t('cuttingEdgeAI')}
               </h2>
               <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                Our proprietary AI system leverages deep learning algorithms specifically trained 
-                on medical imaging data to detect subtle patterns in corneal structure that may 
-                indicate underlying health conditions.
+                {t('technologyDescription')}
               </p>
               
               <div className="space-y-6">
@@ -234,8 +239,8 @@ const LandingPage = () => {
                     <Brain className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">MONAI Framework Integration</h3>
-                    <p className="text-slate-400">Advanced medical imaging AI framework for precise corneal analysis</p>
+                    <h3 className="text-lg font-semibold text-white mb-2">{t('monaiIntegration')}</h3>
+                    <p className="text-slate-400">{t('monaiDescription')}</p>
                   </div>
                 </div>
                 
@@ -244,8 +249,8 @@ const LandingPage = () => {
                     <Shield className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">HIPAA Compliant</h3>
-                    <p className="text-slate-400">Secure, encrypted platform meeting healthcare privacy standards</p>
+                    <h3 className="text-lg font-semibold text-white mb-2">{t('hipaaCompliant')}</h3>
+                    <p className="text-slate-400">{t('hipaaDescription')}</p>
                   </div>
                 </div>
                 
@@ -254,8 +259,8 @@ const LandingPage = () => {
                     <Users className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Collaborative Workflow</h3>
-                    <p className="text-slate-400">Multi-role platform designed for medical research teams</p>
+                    <h3 className="text-lg font-semibold text-white mb-2">{t('collaborativeWorkflow')}</h3>
+                    <p className="text-slate-400">{t('workflowDescription')}</p>
                   </div>
                 </div>
               </div>
@@ -269,8 +274,8 @@ const LandingPage = () => {
                   className="w-full h-64 object-cover rounded-lg"
                 />
                 <div className="mt-6">
-                  <h4 className="text-lg font-semibold text-white mb-2">Ultra-High Resolution Analysis</h4>
-                  <p className="text-slate-400">Advanced imaging processing capable of detecting microscopic corneal changes</p>
+                  <h4 className="text-lg font-semibold text-white mb-2">{t('ultraHighResolution')}</h4>
+                  <p className="text-slate-400">{t('resolutionDescription')}</p>
                 </div>
               </div>
               <div className="absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl"></div>
@@ -283,16 +288,16 @@ const LandingPage = () => {
       <section className="relative z-10 px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-            Ready to Transform Medical Diagnostics?
+            {t('readyToTransform')}
           </h2>
           <p className="text-xl text-slate-300 mb-12">
-            Join healthcare professionals worldwide who trust CornealAI for advanced diagnostic insights.
+            {t('ctaDescription')}
           </p>
           <Button 
             onClick={handleLogin}
             className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-12 py-4 text-xl rounded-xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 transform hover:scale-105"
           >
-            Start Your Analysis Today
+            {t('startToday')}
           </Button>
         </div>
       </section>
@@ -309,7 +314,7 @@ const LandingPage = () => {
             </span>
           </div>
           <p className="text-slate-500">
-            © 2024 CornealAI. Advanced medical imaging AI for healthcare professionals.
+            {t('footerText')}
           </p>
         </div>
       </footer>
@@ -321,6 +326,8 @@ const LandingPage = () => {
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
+  const { t } = useTranslation(language);
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -375,7 +382,7 @@ const ProfilePage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-white text-xl">{t('loading')}</div>
       </div>
     );
   }
@@ -393,20 +400,20 @@ const ProfilePage = () => {
               <Eye className="w-5 h-5 text-slate-900" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              CornealAI Dashboard
+              {t('dashboardTitle')}
             </span>
           </div>
           <Button onClick={handleLogout} variant="outline" size="sm">
             <LogOut className="w-4 h-4 mr-2" />
-            Logout
+            {t('logout')}
           </Button>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome, {user.name}</h1>
-          <p className="text-slate-400">Role: {user.role || 'Collaborator'}</p>
+          <h1 className="text-3xl font-bold mb-2">{t('welcome')}, {user.name}</h1>
+          <p className="text-slate-400">{t('role')}: {user.role || 'Collaborator'}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -414,12 +421,12 @@ const ProfilePage = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <Upload className="w-5 h-5 mr-2" />
-                Upload Files
+                {t('uploadFiles')}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-400 mb-4">Upload corneal images and medical records for AI analysis.</p>
-              <Button className="w-full">Start Upload</Button>
+              <p className="text-slate-400 mb-4">{t('uploadDescription')}</p>
+              <Button className="w-full">{t('startUpload')}</Button>
             </CardContent>
           </Card>
 
@@ -427,12 +434,12 @@ const ProfilePage = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2" />
-                View Results
+                {t('viewResults')}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-400 mb-4">Review AI analysis results and medical insights.</p>
-              <Button className="w-full" variant="outline">View Analysis</Button>
+              <p className="text-slate-400 mb-4">{t('resultsDescription')}</p>
+              <Button className="w-full" variant="outline">{t('viewAnalysis')}</Button>
             </CardContent>
           </Card>
 
@@ -440,12 +447,12 @@ const ProfilePage = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <Users className="w-5 h-5 mr-2" />
-                Collaborate
+                {t('collaborate')}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-400 mb-4">Work with your medical research team.</p>
-              <Button className="w-full" variant="outline">Team Dashboard</Button>
+              <p className="text-slate-400 mb-4">{t('collaborateDescription')}</p>
+              <Button className="w-full" variant="outline">{t('teamDashboard')}</Button>
             </CardContent>
           </Card>
         </div>
@@ -456,14 +463,16 @@ const ProfilePage = () => {
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <LanguageProvider>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </LanguageProvider>
   );
 }
 
